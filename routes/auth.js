@@ -32,10 +32,10 @@ router.post('/register', async (req, res) => {
       const hash = bcrypt.hashSync(user.password, 10); // 12 in production
       user.password = hash;
       const newUser = await db.users.create(user);
-      // generate token and return to caller
+      const token = generateToken(newUser);
       res.status(201).json({
-        message: 'User created!'
-        // token
+        message: 'User created!',
+        token
       });
     }
   } catch (error) {
