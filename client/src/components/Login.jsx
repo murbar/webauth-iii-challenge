@@ -8,8 +8,8 @@ const Login = () => {
     <LoginWrapper>
       <h2>Log in</h2>
       <form>
-        <input type="text" />
-        <input type="password" />
+        <input type="text" name="username" />
+        <input type="password" name="password" />
         <button>Log in</button>
       </form>
     </LoginWrapper>
