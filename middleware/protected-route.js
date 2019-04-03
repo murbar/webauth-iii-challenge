@@ -8,7 +8,6 @@ module.exports = (req, res, next) => {
     req.decodedJwt = decodedToken;
     next();
   } catch (error) {
-    console.log(error);
     res.status(401).json({ message: 'Invalid Credentials.' });
   }
 };
