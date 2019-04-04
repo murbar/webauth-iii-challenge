@@ -25,7 +25,6 @@ const useResource = (endpoint = null) => {
   });
 
   useEffect(() => {
-    console.log('running');
     if (endpoint) {
       getAll();
     } else {
