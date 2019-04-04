@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import NavLink from './NavLink';
+import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const NavWrapper = styled.nav`
+  position: relative;
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
   ul {
@@ -21,30 +23,44 @@ const NavWrapper = styled.nav`
       text-decoration: underline;
     }
     &.active {
-      color: inherit;
+      font-weight: bold;
     }
+  }
+  .welcome {
+    position: absolute;
+    right: 0;
+    margin-right: 0;
   }
 `;
 
 const App = () => {
+  const { auth } = useContext(AuthContext);
+
   return (
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" exact>
+            Home
+          </NavLink>
         </li>
         <li>
           <NavLink to="/users">Users List</NavLink>
         </li>
-        <li>
-          <NavLink to="/login">Log in</NavLink>
-        </li>
-        <li>
-          <NavLink to="/logout">Log out</NavLink>
-        </li>
-        <li>
-          <NavLink to="/register">Register</NavLink>
-        </li>
+        {!auth.user && (
+          <li>
+            <NavLink to="/login">Log in</NavLink>
+          </li>
+        )}
+
+        {auth.user && (
+          <>
+            <li className="welcome">Welcome, {auth.user.username}!</li>
+            <li>
+              <NavLink to="/logout">Log out</NavLink>
+            </li>
+          </>
+        )}
       </ul>
     </NavWrapper>
   );

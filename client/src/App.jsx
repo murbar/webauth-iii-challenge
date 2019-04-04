@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Router } from '@reach/router';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import UsersList from './components/UsersList';
-import Login from './components/Login';
+import LoginForm from './components/LoginForm';
 import Logout from './components/Logout';
-import Register from './components/Register';
+import RegisterForm from './components/RegisterForm';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 const AppWrapper = styled.main`
   max-width: 40rem;
@@ -15,17 +17,21 @@ const AppWrapper = styled.main`
 
 const App = () => {
   return (
-    <AppWrapper>
-      <h1>Auth API demo</h1>
-      <Navigation />
-      <Router>
-        <Home path="/" />
-        <UsersList path="/users" />
-        <Login path="/login" />
-        <Logout path="/logout" />
-        <Register path="/register" />
-      </Router>
-    </AppWrapper>
+    <AuthProvider>
+      <AppWrapper>
+        <h1>Auth API demo</h1>
+        <Router>
+          <Navigation />
+          <Switch>
+            <Route path="/register" component={RegisterForm} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/logout" component={Logout} />
+            <ProtectedRoute path="/users" component={UsersList} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </Router>
+      </AppWrapper>
+    </AuthProvider>
   );
 };
 
