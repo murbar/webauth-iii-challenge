@@ -17,7 +17,6 @@ export function register({ username, password, department }) {
 
 export async function login(username, password) {
   const { data } = await http.post(`${apiUrl}/login`, { username, password });
-  console.log(data);
   localStorage.setItem(tokenKey, data.token);
   http.setToken(data.token);
 }
